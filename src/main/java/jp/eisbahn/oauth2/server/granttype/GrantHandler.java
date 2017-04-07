@@ -18,11 +18,10 @@
 
 package jp.eisbahn.oauth2.server.granttype;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jp.eisbahn.oauth2.server.data.DataHandler;
 import jp.eisbahn.oauth2.server.exceptions.OAuthError;
 
@@ -55,7 +54,7 @@ public interface GrantHandler {
 	 * @author Yoichiro Tanaka
 	 *
 	 */
-	@JsonSerialize(include = Inclusion.NON_NULL)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	@JsonPropertyOrder({"token_type",
 		"access_token",
 		"refresh_token",

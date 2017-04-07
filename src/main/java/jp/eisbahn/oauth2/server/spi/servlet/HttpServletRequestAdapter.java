@@ -68,7 +68,7 @@ public class HttpServletRequestAdapter implements Request {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, String> getParameterMap() {
-		return request.getParameterMap();
+		return null;// request.getParameterMap();
 	}
 
 }

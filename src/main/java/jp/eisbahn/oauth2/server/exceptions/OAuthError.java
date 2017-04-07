@@ -18,12 +18,11 @@
 
 package jp.eisbahn.oauth2.server.exceptions;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonPropertyOrder;
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.*;
 
 /**
  * This abstract class represents an OAuth error information.
@@ -33,16 +32,16 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
  *
  */
 @SuppressWarnings("serial")
-@JsonAutoDetect(fieldVisibility = Visibility.NONE,
-		getterVisibility = Visibility.NONE,
-		isGetterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE,
+		getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonPropertyOrder({"error", "error_description"})
 public abstract class OAuthError extends Exception {
 
 	private int code;
 
 	@JsonProperty("error_description")
-	@JsonSerialize(include = Inclusion.NON_EMPTY)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String description;
 
 	/**

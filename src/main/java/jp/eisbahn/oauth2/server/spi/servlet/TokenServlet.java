@@ -27,8 +27,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
-
 import jp.eisbahn.oauth2.server.data.DataHandlerFactory;
 import jp.eisbahn.oauth2.server.endpoint.Token;
 import jp.eisbahn.oauth2.server.endpoint.Token.Response;
@@ -36,6 +34,7 @@ import jp.eisbahn.oauth2.server.fetcher.clientcredential.ClientCredentialFetcher
 import jp.eisbahn.oauth2.server.fetcher.clientcredential.ClientCredentialFetcherImpl;
 import jp.eisbahn.oauth2.server.granttype.GrantHandlerProvider;
 import jp.eisbahn.oauth2.server.granttype.impl.DefaultGrantHandlerProvider;
+import org.apache.commons.io.IOUtils;
 
 /**
  * This class is an HttpServlet implementation of the Token issuing endpoint.
