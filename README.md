@@ -1,8 +1,7 @@
-oauth2-server
+Java OAuth2 Server for playframework
 ===================
 
-This project is an implementation for [OAuth 2.0 Specification](http://tools.ietf.org/html/rfc6749).
-Especially, the protocol of the server area is covered by this project.
+This project is based on [oauth2-server](https://github.com/yoichiro/oauth2-server).
 
 Current supported Grant types
 -----------------------------
@@ -19,43 +18,35 @@ Current supported token types
 How to use
 ----------
 
-This project is supporting some common processes to issue tokens.
-To use this framework, you have to provide an implementation of a
-DataHandler interface. The implementation class connects this framework
-to your databases or such storages.
+Implement DataHandler interface.
 
-Also, you have to implement a DataHandlerFactory interface to
-create your DataHandler instance.
+Implement DataHandlerFactory interface.
 
 Classes you have to implement are only above.
-
-A class to handle a request to issue an access token is Token class.
-But, the Token class needs some helper classes. Therefore, you have to
-provide their instances to the Token instance. If you're using Spring Framework
-DI Container, you can inject them to the Token instance.
-Refer the applicationContext-token-schenario.xml file.
 
 The way to use the Token class is simple. You can use it as the following snippet:
 
 ```java
-HttpServletRequest request = ...; // Provided by Servlet Container
-HttpServletRequestAdapter adapter = new HttpServletRequestAdapter(request);
-Token token = ...; // Injected
-Token.Response response = token.handleRequest(adapter);
-int code = response.getCode(); // 200, 400, 401, ...
-String body = response.getBody(); // {"token_type":"Bearer","access_token":"...", ...}
-```
+Http.Request request = request();//playframework request
+PlayRequestAdapter adapter = new PlayRequestAdapter(request);
 
-An code for an integration test has the request and response contents of each grant type.
-Refer the test code TokenScenarioTest.
+Token token = new Token();
+token.setDataHandlerFactory(new MyDataHandlerFactory());
+token.setClientCredentialFetcher(new ClientCredentialFetcherImpl());
+token.setGrantHandlerProvider(new DefaultGrantHandlerProvider());
+
+Token.Response response = token.handleRequest(adapter);
+int code = response.getCode();
+String body = response.getBody();
+```
 
 To check the request to access to each API endpoints, you can use
 ProtectedResource class. The following code snippet represents how to use its
 class:
 
 ```java
-HttpServletRequest request = ...; // Provided by Servlet Container
-HttpServletRequestAdapter adapter = new HttpServletRequestAdapter(request);
+Http.Request request = request();//playframework request
+PlayRequestAdapter adapter = new PlayRequestAdapter(request);
 ProtectedResource protectedResource = ...; // Injected
 try {
     ProtectedResource.Response response = protectedResource.handleRequest(adapter);
@@ -71,5 +62,4 @@ try {
 }
 ```
 
-If you build your application with Servlet API, then you can use the code above
-in your Filter class.
+Sample playframework code (2.5.x): [playframework oauth2 server](https://github.com/dacduong/play-oauth2-server)
